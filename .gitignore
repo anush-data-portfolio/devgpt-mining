@@ -1,0 +1,8 @@
+# gitignore pyc
+*.pyc
+data/
+model/
+notebooks/
+other/
+*.sqllite
+subset/

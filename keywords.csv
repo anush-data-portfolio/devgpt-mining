@@ -1,0 +1,91 @@
+ID,keyword
+1,Refactor
+2,Move
+3,Split
+4,Fix
+5,Introduce
+6,Decompose
+7,Reorganize
+8,Extract
+9,Merge
+10,Rename
+11,Change
+12,Restructure
+13,Reformat
+14,Extend
+15,Remove
+16,Replace
+17,Rewrite
+18,Simplify
+19,Create
+20,Improve
+21,Add
+22,Modify
+23,Enhance
+24,Rework
+25,Inline
+26,Redesign
+27,Cleanup
+28,Reduce
+29,Encapsulate
+30,Removed poor coding practice
+31,Improve naming consistency
+32,Removing unused classes
+33,Pull some code up
+34,Use better name
+35,Replace it with
+36,Make maintenance easier
+37,Code cleanup
+38,Minor Simplification
+39,Reorganize project structures
+40,Code maintenance for refactoring
+41,Remove redundant code
+42,Moved and gave clearer names to
+43,Refactor bad designed code
+44,Getting code out of
+45,Deleting a lot of old stuff
+46,Code revision
+47,Fix technical debt
+48,Fix quality issue
+49,Antipattern bad for performances
+50,Major structural changes
+51,Clean up unnecessary code
+52,Code reformatting & reordering
+53,Nicer code
+54,Simplify code redundancies
+55,Added more checks for quality factors
+56,Naming improvements
+57,Renamed for consistency
+58,Refactoring towards nicer name analysis
+59,Change design
+60,Modularize the code
+61,Code cosmetics
+62,Moved more code out of
+63,Remove dependency
+64,Enhanced code beauty
+65,Simplify internal design
+66,Change package structure
+67,Use a safer method
+68,Code improvements
+69,Minor enhancement
+70,Get rid of unused code
+71,Fixing naming convention
+72,Fix module structure
+73,Code optimization
+74,Fix a design flaw
+75,Nonfunctional code cleanup
+76,Improve code quality
+77,Fix code smell
+78,Use less code
+79,Avoid future confusion
+80,More easily extended
+81,Polishing code
+82,Move unused file away
+83,Many cosmetic changes
+84,Inlined unnecessary classes
+85,Code cleansing
+86,Fix quality flaws
+87,Simplify the code
+88,Minor structural changes
+88,formatted 
+89, structure
