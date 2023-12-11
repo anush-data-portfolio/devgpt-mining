@@ -55,7 +55,7 @@ Welcome to the DevGPT Pipeline! This project extracts, processes, and analyzes d
 The container_id can be found by running `docker ps`.
 Sample usage:
    ```bash
-    docker cp devgpt-controller-1:/app/devgpt.sqlite . 
+    docker cp devgpt-mining-controller-1:/app/devgpt.sqlite . 
    ```
 
 
