@@ -9,6 +9,7 @@ class Component(abc.ABC):
         self.status = "Not Started"
 
     @abc.abstractmethod
-    def process(self, data):
+    def process(self):
+        '''Start processing the data'''
         pass
 

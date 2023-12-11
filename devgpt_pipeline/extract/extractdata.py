@@ -1,10 +1,18 @@
-from devgpt_pipeline.extract.utls import get_files_in_folder, parse_json, get_snapshot_folders
-import pandas as pd
-import os 
+'''
+This file is used to extract data from the snapshots in the data folders store them in a csv file.
+The extracted data is stored in the 'extracted' folder.
+'''
+import os
 import json
+import pandas as pd
+from devgpt_pipeline.extract.utls import (
+    get_files_in_folder, parse_json, get_snapshot_folders)
 from pipeline import Component
 
 class DataExtractor(Component):
+    '''
+    Extract data from the snapshots in the data folder
+    '''
     def __init__(self, data_folder='data'):
         super().__init__('Extract')
         self.data_folder = data_folder
@@ -23,25 +31,27 @@ class DataExtractor(Component):
         self.distribution = {}  # check the frequency of unique keys across snapshots
 
     def process(self):
+        '''
+        Run the extraction process
+        '''
         self.__combine_all_files()
         self.__create_unique_keys()
         self.__extract_sharing()
         self.__extract_chatgpt()
         self.__check_for_frequency()
-         
+
         path = 'extracted'
         if not os.path.exists('extracted'):
             os.makedirs('extracted')
         for key, df in self.file_df.items():
             df.to_csv(f'{path}/{key}.csv', index=False)
         # store snapshot legend
-        with open(f'{path}/legend.json', 'w') as f:
+        with open(f'{path}/legend.json', encoding='utf-8', mode='w') as f:
             json.dump(self.legend, f)
         if not os.path.exists(f'{path}/distribution'):
             os.makedirs(f'{path}/distribution')
         for key, df in self.distribution.items():
             df.to_csv(f'{path}/distribution/{key}.csv', index=False)
- 
 
     def __get_all_files(self):
         folders = get_snapshot_folders(self.data_folder)
@@ -51,8 +61,8 @@ class DataExtractor(Component):
                 self.file_df[ftype].append(get_files_in_folder(folder, ftype))
 
     def __create_unique_keys(self):
-        for _, df in self.file_df.items():
-            self.__create_unique_key(_)
+        for table, df in self.file_df.items():
+            self.__create_unique_key(table)
 
 
 
@@ -98,7 +108,9 @@ class DataExtractor(Component):
         conversationdf = pd.DataFrame()
         conversations = []
         for _, row in self.file_df['sharing'].iterrows():
-            row['Conversations'] = [] if type(row['Conversations']) == float else row['Conversations']
+            row['Conversations'] = [] if isinstance(
+                row['Conversations'], float
+                ) else row['Conversations']
             sharing_id, snapshot = row['uid'], row['snapshot']
             pos = 0
             for conv in row['Conversations']:
@@ -119,9 +131,10 @@ class DataExtractor(Component):
         for key, files in self.file_df.items():
             index = 1
             df = pd.DataFrame()
-            for i, file in enumerate(files):
+            for _, file in enumerate(files):
                 folder = file.split('/')[1]
-                if folder not in self.legend.keys():
+                keys = self.legend.keys()
+                if folder not in keys:
                     self.legend[folder] = index
                 data = parse_json(file)
                 temp = pd.DataFrame(data)

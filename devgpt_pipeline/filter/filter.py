@@ -26,7 +26,7 @@ spacy_nlp = spacy.load('en_core_web_sm')
 
 
 class KeywordFilterComponent(Component):
-    def __init__(self,  output_folder="filtered_data", data_folder="tokenised_data"):
+    def __init__(self, data_folder="tokenised_data"):
         super().__init__('Keyword Filter')
         self.database_url = "sqlite:///devgpt.sqlite"
         self.session = self.get_session().__next__()
@@ -47,7 +47,6 @@ class KeywordFilterComponent(Component):
             'SAR': "SAR.csv",
 
         }
-        self.output_folder = output_folder
         self.data_folder = data_folder
 
     def regex_match(self, string_vec, keyword):
@@ -186,7 +185,6 @@ class KeywordFilterComponent(Component):
                     if not matches.empty:
                         merge_matches_df = pd.concat([merge_matches_df, matches], ignore_index=True)
                     counter+=1 
-                self.check_if_folder_exists(self.output_folder)
                 self.load_to_db(merge_matches_df)
 
         print("Finished Keyword Filter")

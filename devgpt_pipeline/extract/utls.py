@@ -2,7 +2,7 @@
 File Utils
 
 '''
-import os 
+import os
 import json
 
 def get_snapshot_folders(root):
@@ -31,6 +31,9 @@ def get_snapshot_numbers(folder):
 
 
 def get_files_in_folder(folder, ftype):
+    '''
+    Get files in a folder
+    '''
     files = os.listdir('data/' + folder)
     # check for files containing 'issue' in the name
     files = [f for f in files if ftype in f]
@@ -44,8 +47,6 @@ def parse_json(file):
     '''
     Parse json file
     '''
-    with open(file) as f:
+    with open(file, encoding='utf-8') as f:
         data = json.load(f)
     return data['Sources']
-
-
