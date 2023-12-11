@@ -86,22 +86,22 @@ class LanguageTranslatorComponent(Component):
         self.database_url = "sqlite:///devgpt.sqlite"
         self.session = self.get_session().__next__()
         self.columns_to_detect = {
-            # 'issue': ['title', 'body'],
+            'issue': ['title', 'body'],
             # 'pull_request': ['title', 'body'],
             # 'commit': ['message'],
             # 'discussion': ['title', 'body'],
             # 'sharing': ['title'],
-            'conversation': ['Prompt', 'Answer'],
+            # 'conversation': ['Prompt', 'Answer'],
             # 'hackernews': ['title']
 
         }
         self.table_obj = {
-            # 'issue': Issue,
+            'issue': Issue,
             # 'pull_request': PullRequest,
             # 'commit': Commit,
             # 'discussion': Discussion,
             # 'sharing': Sharing,
-            'conversation': Conversation,
+            # 'conversation': Conversation,
             # 'hackernews': HackerNews
         }
     
@@ -168,13 +168,8 @@ class LanguageTranslatorComponent(Component):
         return df
 
 
-    def process(self, data=None):
+    def process(self):
         session = self.get_session().__next__()
-        results = {}
-        # before translating make a copy of the database file 
-        import os
-        os.system("cp devgpt.sqlite devgpt_untranslated.sqlite")
-
 
         print("Language Translation component started processing")
 

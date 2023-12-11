@@ -1,0 +1,20 @@
+# Ignore compiled Python files
+*.pyc
+
+# Ignore directories
+model/
+notebooks/
+other/
+subset/
+results/
+filtered_data/
+tokenized_data/
+output/
+rough/
+
+# Ignore specific files
+.sqllite
+devgpt2.sqlite
+devgpt.sqlite
+.DS_Store
+*ipynb

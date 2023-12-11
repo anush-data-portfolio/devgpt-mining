@@ -1,12 +1,14 @@
 from devgpt_pipeline.models.model import (
     Issue, Snapshot, Sharing, Conversation,HackerNews,
-    PullRequest, Discussion, Commit )
+    PullRequest, Discussion, Commit, Base )
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
 import pandas as pd
 import os
 import json
 from pipeline import Component
+from alembic.config import Config
+
 
 class DataLoader(Component):
     def __init__(self):
@@ -19,7 +21,16 @@ class DataLoader(Component):
         Session = sessionmaker(bind=self.engine)
         self.session = Session()
     
+    def __create_db(self):
+        # create a sqlite database
+        Base.metadata.create_all(self.engine)
+
+    def __check_db_exists(self):
+        if not os.path.exists('devgpt.sqlite'):
+            self.__create_db()
+    
     def process(self):
+        self.__check_db_exists()
         keys = ['commit', 'discussion', 'issue', 'pr', 'sharing', 'conversation', 'hn']
         self.__set_snapshot_legend()
         self.__set_data_dict(keys)

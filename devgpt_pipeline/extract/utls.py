@@ -43,10 +43,7 @@ def get_files_in_folder(folder, ftype):
 
 
 
-def parse_json(file):
-    '''
-    Parse json file
-    '''
-    with open(file, encoding='utf-8') as f:
+def parse_json(file_path):
+    with open(file_path, 'r') as f:
         data = json.load(f)
     return data['Sources']

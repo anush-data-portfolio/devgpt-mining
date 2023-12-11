@@ -20,13 +20,13 @@ class DataExtractor(Component):
         self.file_type = [  'issue', 'pr', 'commit', 'hn', 'discussion', 'commit']
         self.file_df = {}
         self.unique_keys = {
-            'issue': ['RepoName', 'Number', 'Title'],
-            'pr': ['RepoName', 'Number', 'Title'],
-            'commit': ['Sha'],
+            'issue': ['RepoName', 'Number', 'Title', 'Body'],
+            'pr': ['RepoName', 'Number', 'Title', 'Body'],
+            'commit': ['Sha', 'Message'],
             'hn': ['ID', 'Title'],
-            'discussion': ['RepoName', 'Number', 'Title'],
-            'sharing': ['type_id', 'share_no'],
-            'conversation': ['sharing_id', 'position']
+            'discussion': ['RepoName', 'Number', 'Title', 'Body'],
+            'sharing': ['type_id', 'share_no', 'Title'],
+            'conversation': ['sharing_id', 'position', 'Prompt', 'Answer']
         }
         self.distribution = {}  # check the frequency of unique keys across snapshots
 
@@ -34,6 +34,7 @@ class DataExtractor(Component):
         '''
         Run the extraction process
         '''
+        print("Starting Extraction")
         self.__combine_all_files()
         self.__create_unique_keys()
         self.__extract_sharing()

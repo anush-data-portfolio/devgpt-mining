@@ -1,13 +1,14 @@
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
-
+from sqlalchemy.exc import IntegrityError
 import spacy
 from spacy.lang.en.stop_words import STOP_WORDS
 import string
 
 import time
 from pipeline import Component
-from devgpt_pipeline.models.model import Conversation, KeywordMatch
+from devgpt_pipeline.models.model import (
+    Conversation, KeywordMatch, Issue, PullRequest, Commit, Discussion, Sharing, HackerNews)
 import pandas as pd
 
 import re
@@ -32,12 +33,12 @@ class KeywordFilterComponent(Component):
         self.session = self.get_session().__next__()
         self.columns_to_clean = {
             Conversation: ['Prompt', 'Answer', 'id', 'snapshot_id','ListOfCode'],
-            # Issue: ['body', 'title', 'id', 'snapshot_id'],
-            # PullRequest: ['body', 'title', 'id', 'snapshot_id'],
-            # Commit: ['message', 'id', 'snapshot_id'],
-            # Discussion: ['body', 'title', 'id', 'snapshot_id'],
-            # Sharing: [ 'title', 'id', 'snapshot_id'],
-            # HackerNews: ['title', 'id', 'snapshot_id']
+            Issue: ['body', 'title', 'id', 'snapshot_id'],
+            PullRequest: ['body', 'title', 'id', 'snapshot_id'],
+            Commit: ['message', 'id', 'snapshot_id'],
+            Discussion: ['body', 'title', 'id', 'snapshot_id'],
+            Sharing: [ 'title', 'id', 'snapshot_id'],
+            HackerNews: ['title', 'id', 'snapshot_id']
         }
         self.keyword_folder = "keywords/"
         self.keywords = {
@@ -138,7 +139,6 @@ class KeywordFilterComponent(Component):
         # check if record exists
             if self.session.query(KeywordMatch).filter_by(id=data['id'], snapshot_id=data['snapshot_id'], keyword=data['keyword'], column_name=data['col']).first():
                 continue
-        # Insert data into database
             record = KeywordMatch(
                 keyword=data['keyword'],
                 id=data['id'],
@@ -147,15 +147,15 @@ class KeywordFilterComponent(Component):
                 table=data['table']
             )
             records.append(record)
-            self.session.add(record)
-        try:
-            self.session.bulk_save_objects(records)
-            self.session.commit()
+            try:
+                self.session.add(record)
+                self.session.commit()
+            except Exception as e:
+                self.session.rollback()
+                continue    
+
             print(f"Successfully inserted {len(records)} records into database")
-        except Exception as e:
-            print(f"Failed to insert records into database: {e}")
-            self.session.rollback()
-            raise Exception(f"Failed to insert records into database: {e}")
+        return True
     
 
 

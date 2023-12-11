@@ -6,8 +6,8 @@ from sqlalchemy.orm import sessionmaker
 
 import pandas as pd
 from pipeline import Component
-from devgpt_pipeline.models.model import Issue, PullRequest, Commit, Discussion, Sharing, Conversation, Language, HackerNews
-# from dask_config.get_dask import get_dask_client
+from devgpt_pipeline.models.model import (
+    Issue, PullRequest, Commit, Discussion, Sharing, Conversation, Language, HackerNews)
 
 from nltk.tokenize import word_tokenize
 import fasttext
@@ -24,37 +24,32 @@ class LanguageDetectionComponent(Component):
         self.database_url = "sqlite:///devgpt.sqlite"
         self.session = self.get_session().__next__()
         self.columns_to_detect = {
-            # 'issue': ['title', 'body'],
-            # 'pull_request': ['title', 'body'],
-            # 'commit': ['message'],
-            # 'discussion': ['title', 'body'],
-            # 'sharing': ['title'],
+            'issue': ['title', 'body'],
+            'pull_request': ['title', 'body'],
+            'commit': ['message'],
+            'discussion': ['title', 'body'],
+            'sharing': ['title'],
             'conversation': ['Prompt', 'Answer'],
-            # 'hackernews': ['title']
+            'hackernews': ['title']
 
         }
         self.table_obj = {
-            # 'issue': Issue,
-            # 'pull_request': PullRequest,
-            # 'commit': Commit,
-            # 'discussion': Discussion,
-            # 'sharing': Sharing,
+            'issue': Issue,
+            'pull_request': PullRequest,
+            'commit': Commit,
+            'discussion': Discussion,
+            'sharing': Sharing,
             'conversation': Conversation,
-            # 'hackernews': HackerNews
+            'hackernews': HackerNews
         }
         nltk.download('stopwords')
         nltk.download('punkt')
         self.lang_code_json = "devgpt_pipeline/lang_detect/langcode.json"
         self.lang_code_dict = pd.read_json(self.lang_code_json, typ='series').to_dict()
         self.__update_languages()    
-        # self.client = get_dask_client()
-        # self.dask_dashboard = self._get_dashboard()
-    
-    # def _get_dashboard(self):
-    #     return self.client.scheduler_info()['services']['dashboard']
+
 
     def get_session(self):
-        # use yield to create a session 
         engine = create_engine(self.database_url)
         Session = sessionmaker(bind=engine)
         session = Session()
@@ -103,54 +98,31 @@ class LanguageDetectionComponent(Component):
         session = self.get_session().__next__()
         results = {}
         print("Language detection component started processing")
-        # print(f" Check the Dask dashboard at {self.dask_dashboard}")
 
         for table, columns in self.columns_to_detect.items():
-            # Read data from the specified table, index_col is the primary key
             df = self.__get_data_from_table(table)
-            # break the dataframe into chunks of 1000 rows
             df_chunks = [df[i:i+1000] for i in range(0, len(df), 1000)]
             for cdf in df_chunks:
                 print(f"Processing {len(cdf)} rows from {table}")
                 table_ddf = dd.from_pandas(cdf, npartitions=10)
-                # drop null values using dask
                 table_ddf = table_ddf.fillna('')
-
-
-
-
-                # Detect language for each specified column
                 for column in columns:
                     table_ddf[f'{column}_language'] = table_ddf[column].apply(self.detect_language, meta=(f'{column}_language', 'str'))
-
-                # Compute the Dask dataframe to get the results
                 result_df = table_ddf.compute()
                 print(f"Finished detecting language for {table}")
-
-
-                # Update the database using SQLAlchemy
                 for _, row in result_df.iterrows():
-                    # filter by id and snapshot
-                    # get table is the table na
-
-
                     record = session.query(self.table_obj[table]).filter_by(id=row['id'], snapshot_id=row['snapshot_id']).first()
                     if record:
-                        # if we are finding the language for more than one column
-                        # Choose the language with the highest probability
-                        print(record.id)
                         lang_code_prob = []
                         for column in columns:
                             lang_code_prob.append(row[f'{column}_language'])
                         record.language_id = max(lang_code_prob, key=lambda x: x[1])[0]
                         session.add(record)
                     else:
-                        # if the rcord does not exist, raise an exception
                         raise Exception(f"Record with id {row['id']} and snapshot {row['snapshot']} does not exist in table {table}")
                 session.commit()
                 results[table] = len(result_df)
                 print(f"Successfully updated {len(result_df)} rows in {table}")
 
         session.close()
-
         return f"Language detection Component finished processing {len(results)} tables"

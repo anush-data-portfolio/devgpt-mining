@@ -7,18 +7,18 @@ from devgpt_pipeline.preprocessing.preprocessing import PreProcessorComponent
 from devgpt_pipeline.filter.filter import KeywordFilterComponent
 
 pipeline = Pipeline()
-extract_component = DataExtractor(data_folder='data')
+extract_component = DataExtractor()
 Load_component = DataLoader()
 lang_detect_component = LanguageDetectionComponent()
 translator_component = LanguageTranslatorComponent()
 preprocessor_component = PreProcessorComponent(output_folder="tokenised_data")
-filter_component = KeywordFilterComponent(output_folder="filtered_data")
-
+filter_component = KeywordFilterComponent()
+print("Pipeline created")
 pipeline.add_component(extract_component)
-pipeline.add_component(Load_component)
-pipeline.add_component(lang_detect_component)
-pipeline.add_component(translator_component)
-pipeline.add_component(preprocessor_component)
-pipeline.add_component(filter_component)
+# pipeline.add_component(Load_component)
+# pipeline.add_component(lang_detect_component)
+# pipeline.add_component(translator_component)
+# pipeline.add_component(preprocessor_component)
+# pipeline.add_component(filter_component)
 
 pipeline.run()

@@ -7,7 +7,8 @@ import string
 
 import time
 from pipeline import Component
-from devgpt_pipeline.models.model import Issue, PullRequest, Commit, Discussion, Sharing, Conversation, Language, HackerNews
+from devgpt_pipeline.models.model import (
+    Issue, PullRequest, Commit, Discussion, Sharing, Conversation, Language, HackerNews)
 import pandas as pd
 
 import re
@@ -31,13 +32,13 @@ class PreProcessorComponent(Component):
         self.database_url = "sqlite:///devgpt.sqlite"
         self.session = self.get_session().__next__()
         self.columns_to_clean = {
-            # Conversation: ['Prompt', 'Answer', 'id', 'snapshot_id','ListOfCode'],
-            # Issue: ['body', 'title', 'id', 'snapshot_id'],
-            # PullRequest: ['body', 'title', 'id', 'snapshot_id'],
-            # Commit: ['message', 'id', 'snapshot_id'],
+            Conversation: ['Prompt', 'Answer', 'id', 'snapshot_id','ListOfCode'],
+            Issue: ['body', 'title', 'id', 'snapshot_id'],
+            PullRequest: ['body', 'title', 'id', 'snapshot_id'],
+            Commit: ['message', 'id', 'snapshot_id'],
             Discussion: ['body', 'title', 'id', 'snapshot_id'],
             Sharing: [ 'title', 'id', 'snapshot_id'],
-            # HackerNews: ['title', 'id', 'snapshot_id']
+            HackerNews: ['title', 'id', 'snapshot_id']
         }
         self.output_folder = output_folder
     
