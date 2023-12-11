@@ -1,0 +1,33 @@
+Internal QA,External QA,Code Smell
+Inheritance, Functionality, Duplicate Code
+Abstraction, Performance, Dead Code
+Complexity, Compatibility, Data Class
+Composition, Readability, Long Method
+Coupling, Stability, Switch Statement
+Encapsulation, Usability, Lazy Class
+Design Size, Flexibility, Too Many Parameters
+Polymorphism, Extensibility, Primitive Obsession
+Cohesion, Efficiency, Feature Envy
+Dependency, Accuracy, Blob Class
+, Accessibility, Blob Operation
+, Robustness,
+, Testability,
+, Correctness,
+, Scalability,
+, Configurability,
+, Simplicity,
+, Reusability,
+, Reliability,
+, Modularity,
+, Maintainability,
+, Traceability,
+, Interoperability,
+, Fault-tolerance,
+, Repeatability,
+, Understandability,
+, Effectiveness,
+, Productivity,
+, Modifiability,
+, Reproducibility,
+, Adaptability,
+, Manageability,

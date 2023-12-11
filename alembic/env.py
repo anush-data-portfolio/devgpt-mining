@@ -20,9 +20,9 @@ if config.config_file_name is not None:
 # target_metadata = mymodel.Base.metadata
 target_metadata = None
 
-from devgpt_processing.load.model import Base
+from devgpt_pipeline.models.model import decBase
 
-target_metadata = Base.metadata
+target_metadata = decBase.metadata
 
 # other values from the config, defined by the needs of env.py,
 # can be acquired:

@@ -1,0 +1,107 @@
+keyword
+refactor*
+mov*
+split*
+fix*
+introduc*
+decompos*
+reorganiz*
+extract*
+merge*
+renam*
+chang*
+restructur*
+reformat*
+extend*
+remov*
+replac*
+rewrit*
+simplify*
+creat*
+improv*
+add*
+modify*
+enhanc*
+rework*
+inlin*
+redesign*
+cleanup
+reduc*
+encapsulat*
+removed poor coding practice
+improve naming consistency
+change design
+improve naming consistency
+removing unused classes
+code cosmetics
+pull some code up
+use better name
+replace it with
+moved more code out of
+refactor*
+improve naming consistency
+modularize the code
+removing unused classes
+code cosmetics
+pull some code up
+use better name
+replace it with
+moved more code out of
+introduce*
+use better name
+replace it with
+moved more code out of
+decompose*
+replace it with
+moved more code out of
+reorganize*
+make maintenance easier
+simplify internal design
+extract*
+code cleanup
+minor simplification
+merge*
+minor simplification
+use a safer method
+rename*
+reorganize project structures
+code improvements
+change*
+code maintenance for refactoring
+minor enhancement
+restructure*
+remove redundant code
+get rid of unused code
+reformat*
+moved and gave clearer names to
+fixing naming convention
+extend*
+refactor bad designed code
+fix module structure
+remove*
+getting code out of
+replace*
+deleting a lot of old stuff
+fix a design flaw
+rewrite*
+code revision
+nonfunctional code cleanup
+simplify*
+fix technical debt
+improve code quality
+create*
+fix quality issue
+fix code smell
+improve*
+code revision
+nonfunctional code cleanup
+simplify code redundancies
+redesign*
+added more checks for quality factors
+inlined unnecessary classes
+cleanup
+naming improvements
+reduce*
+renamed for consistency
+refactoring towards nicer name analysis
+simplify the code

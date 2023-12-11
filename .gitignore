@@ -6,3 +6,12 @@ notebooks/
 other/
 *.sqllite
 subset/
+lid.176.bin
+results/
+*ipynb
+rough/
+devgpt.sqlite
+filtered_data/
+tokenized_data/
+*.DS_Store
+output/
