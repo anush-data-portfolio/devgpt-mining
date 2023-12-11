@@ -3,7 +3,6 @@
 
 # Ignore data directories
 data/
-model/
 notebooks/
 other/
 filtered_data/

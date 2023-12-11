@@ -67,7 +67,7 @@ class LanguageDetectionComponent(Component):
     def detect_language( text):
         '''Detect the language of the text using fasttext'''
         text = LanguageDetectionComponent.clean_text(text)
-        language_classifier = fasttext.load_model('lid.176.bin')
+        language_classifier = fasttext.load_model('model/lid.176.bin')
         language = language_classifier.predict(text)
         language = language[0][0].split('__')[-1], language[1][0]
         return language

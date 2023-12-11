@@ -2,7 +2,6 @@
 *.pyc
 
 # Ignore directories
-model/
 notebooks/
 other/
 subset/
