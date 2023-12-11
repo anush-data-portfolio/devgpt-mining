@@ -26,7 +26,7 @@ RUN mkdir data
 RUN curl -LJO https://zenodo.org/records/10086809/files/DevGPT.zip?download=1 && unzip -o DevGPT.zip -d data && rm DevGPT.zip
 
 # install lid.176.bin from https://dl.fbaipublicfiles.com/fasttext/supervised-models/lid.176.bin in the app directory
-RUN curl -LJO https://dl.fbaipublicfiles.com/fasttext/supervised-models/lid.176.bin && mv lid.176.bin app/lid.176.bin
+RUN curl -LJO https://dl.fbaipublicfiles.com/fasttext/supervised-models/lid.176.bin 
 
 
 # Download spaCy model
