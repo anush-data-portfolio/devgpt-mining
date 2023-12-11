@@ -63,5 +63,5 @@ Sample usage:
 
 ## Note
 
-Ensure an internet connection for dataset downloads from Zenodo.
+Ensure a stable internet connection for dataset downloads from Zenodo.
 
